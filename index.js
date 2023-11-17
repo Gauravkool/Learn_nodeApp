@@ -7,13 +7,13 @@ const server = express();
 const path = require("path");
 const productRouter = require("./routes/product");
 const userRouter = require("./routes/user");
-console.log("env", process.env.DB_PASSWORD);
+
 
 // db connection code
 main().catch((err) => console.log(err, "err"));
 
 async function main() {
-  await mongoose.connect("mongodb://127.0.0.1:27017/ecommerce");
+  await mongoose.connect(process.env.MONGO_URL);
   console.log("database connected");
 }
 
