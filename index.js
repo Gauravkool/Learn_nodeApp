@@ -8,7 +8,6 @@ const path = require("path");
 const productRouter = require("./routes/product");
 const userRouter = require("./routes/user");
 
-
 // db connection code
 main().catch((err) => console.log(err, "err"));
 
@@ -20,6 +19,7 @@ async function main() {
 //bodyParser
 server.use(cors());
 server.use(express.json());
+server.use(express.urlencoded());
 server.use(morgan("default"));
 server.use(express.static(path.resolve(__dirname, process.env.PUBLIC_DIR)));
 server.use("/products", productRouter.router);
