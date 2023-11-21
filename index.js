@@ -1,4 +1,5 @@
 require("dotenv").config();
+const fs = require("fs");
 const express = require("express");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
@@ -9,6 +10,10 @@ const productRouter = require("./routes/product");
 const userRouter = require("./routes/user");
 const authRouter = require("./routes/auth");
 const jwt = require("jsonwebtoken");
+const publicKey = fs.readFileSync(
+  path.resolve(__dirname, "./public.key"),
+  "utf-8"
+);
 // db connection code
 main().catch((err) => console.log(err, "err"));
 
@@ -22,7 +27,7 @@ const auth = (req, res, next) => {
   try {
     const token = req.get("Authorization").split("Bearer ")[1];
     console.log(token, "token");
-    const decoded = jwt.verify(token, process.env.SECRET);
+    const decoded = jwt.verify(token, publicKey);
     console.log(decoded, "decoded");
     if (decoded.email) {
       next();
